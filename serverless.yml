@@ -136,6 +136,7 @@ functions:
           method: post
           operationId: getShippingLabel
           authorizer:
+            name: DefaultAuthorizer
             arn: arn:aws:cognito-idp:${self:custom.region}:${self:custom.awsAccountId}:userpool/${self:custom.region}${self:custom.cognitoUserPoolId}
             scopes: label/print
 resources:
