@@ -127,8 +127,6 @@ functions:
     name: ${self:custom.resourcePrefix}LabelPrintingApi
     description: Print Shipping Labels
     disableLogs: false
-    tags:
-      Name: ${self:custom.resourcePrefix}LabelPrintingApi
     package:
       patterns:
         - "!*.py"
