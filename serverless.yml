@@ -33,9 +33,6 @@ provider:
     metrics: true
     shouldStartNameWithService: false
   http:
-    authorizer:
-      arn: arn:aws:cognito-idp:${self:custom.region}:${self:custom.awsAccountId}:userpool/${self:custom.region}${self:custom.cognitoUserPoolId}
-      scopes: label/print
     cors:
       origins:
         - "*"
@@ -138,6 +135,9 @@ functions:
           path: /getShippingLabel
           method: post
           operationId: getShippingLabel
+          authorizer:
+            arn: arn:aws:cognito-idp:${self:custom.region}:${self:custom.awsAccountId}:userpool/${self:custom.region}${self:custom.cognitoUserPoolId}
+            scopes: label/print
 resources:
   Resources:
     UserPoolResourceServer:
