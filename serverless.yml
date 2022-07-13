@@ -132,6 +132,11 @@ functions:
         - "!*.py"
         - LabelPrintingApi.py
       individually: true
+    events:
+      - http:
+          path: /getShippingLabel
+          method: post
+          operationId: getShippingLabel
 resources:
   Resources:
     UserPoolResourceServer:
