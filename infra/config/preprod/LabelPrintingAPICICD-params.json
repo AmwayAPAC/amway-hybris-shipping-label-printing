@@ -1,0 +1,30 @@
+[
+  {
+    "ParameterKey": "Region",
+    "ParameterValue": "Apac"
+  },
+  {
+    "ParameterKey": "ServiceName",
+    "ParameterValue": "LabelPrintingAPI"
+  },
+  {
+    "ParameterKey": "Environment",
+    "ParameterValue": "Preprod"
+  },
+  {
+    "ParameterKey": "Country",
+    "ParameterValue": "Msb"
+  },
+  {
+    "ParameterKey": "Stage",
+    "ParameterValue": "preprod"
+  },
+  {
+    "ParameterKey": "GitHubRepo",
+    "ParameterValue": "https://github.com/AmwayAPAC/amway-hybris-shipping-label-printing.git"
+  },
+  {
+    "ParameterKey": "GitHubBranch",
+    "ParameterValue": "msb"
+  }
+]

@@ -1,0 +1,19 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.8
+  pre_build:
+    commands:
+      - echo Building with parameters, GitHubBranch= $GitHubBranch, Stage= $Stage
+      - pwd
+      - git checkout $GitHubBranch
+      - echo Installing source NPM dependencies
+      - npm_config_user=root npm install -g serverless
+      - npm install
+  build:
+    commands:
+      - echo serverless deploy started on `date`
+      - serverless deploy --stage $Stage | tee deploy.out
+      - echo serverless deploy completed on `date`

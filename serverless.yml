@@ -1,0 +1,149 @@
+# Author: SEA IT - Desmond Soon
+# Service name: CMP to Zendesk Migration APIs.
+
+service: ${self:custom.resourcePrefix}CmpZendeskMigrationAPI
+plugins:
+  - "@pretty-fun-therapy/serverless-plugin-tag-cloud-watch-logs"
+  #- serverless-aws-documentation
+  #- serverless-deployment-bucket
+  #- serverless-s3-remover
+
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: python3.8
+  stage: ${opt:stage, 'v1'}
+  region: ap-southeast-1
+  stackName: ${self:custom.resourcePrefix}LabelPrintingAPIStack
+  apiName: ${self:custom.resourcePrefix}LabelPrintingAPI
+  memorySize: 128
+  timeout: 900
+  logRetentionInDays: 7
+  deploymentBucket:
+    name: serverless-deployment-bucket-apac
+
+  lambdaHashingVersion: 20201221
+  environment: # service wide environment variables
+    LOG_VERBOSITY: INFO
+  endpointType: regional
+  logs:
+    restApi: true
+  apiGateway:
+    metrics: true
+    shouldStartNameWithService: false
+  http:
+    authorizer:
+      arn: arn:aws:cognito-idp:AWS::Region:AWS::AccountId:userpool/ap-southeast-1_IvuRje8nS
+      scopes: label/print
+    cors:
+      origins:
+        - "*"
+      headers:
+        - Content-Type
+        - X-Amz-Date
+        - Authorization
+        - X-Api-Key
+        - X-Amz-Security-Token
+        - X-Amz-User-Agent
+        - Access-Control-Allow-Origin
+      allowCredentials: false
+  iam:
+    role:
+      name: ${self:custom.resourcePrefix}LabelPrintingAPI-role
+      statements:
+        - Effect: "Allow"
+          Action:
+            - "s3:GetObject"
+            - "s3:PutObject"
+            - "athena:StartQueryExecution"
+            - "glue:GetPartitions"
+            - "athena:GetQueryExecution"
+            - "athena:GetQueryResults"
+            - "s3:ListBucket"
+            - "glue:GetTable"
+            - "logs:CreateLogGroup"
+            - "logs:CreateLogStream"
+            - "logs:PutLogEvents"
+            - "ec2:CreateNetworkInterface"
+            - "ec2:DescribeNetworkInterfaces"
+            - "ec2:DeleteNetworkInterface"
+          Resource: "*"
+  stackTags: # service wide tags
+    ProjectName: ${self:custom.ProjectName}
+    ApplicationID: ${self:custom.ApplicationID}
+    ApplicationName: ${self:custom.ApplicationName}
+    Country: ${self:custom.country}
+    Contact: ${self:custom.Contact}
+    Environment: ${self:custom.Environment}
+# packaging information here
+package:
+  patterns:
+    - "!src/**"
+    - "!test/**"
+    - "!cicd/**"
+    - "!infra/**"
+    - "!models/**"
+    - "!validate/**"
+    - "!__pycache__/**"
+    - "!.serverless/**"
+    - "!node_modules/**"
+    - "!resources/**"
+    - "!.gitignore"
+    - "!*.py"
+    - "!package.json"
+    - "!package-lock.json"
+    - "!README.md"
+    - "!deploy.out"
+  individually: true
+  excludeDevDependencies: false
+custom:
+  addLambdaTagsOnLogGroups: true
+  ProjectName: POE2
+  ApplicationID: POE2
+  ApplicationName: POE2
+  Country: ${self:custom.country}
+  Contact: Desmond.Soon@Amway.com
+  Environment: ${self:custom.environments.${self:provider.stage}}
+  EnvironmentSmall: ${self:provider.stage}
+  country: Msb
+  countrySmall: msb
+  resourcePrefix: Apac${self:custom.country}${self:custom.environments.${self:provider.stage}}
+  awsAccountId: 141515744291
+  apiGatewayId: grbuqmbj72
+  cognitoUserPoolId: _IvuRje8nS
+  environments:
+    dev: Dev
+    qa: Qa
+    qa2: Qa2
+    qa3: Qa3
+    prd: Prd
+    uat: Uat
+    uat3: Uat3
+    preprod: Preprod
+functions:
+  LabelPrintingApi:
+    handler: LabelPrintingApi.lambda_handler
+    name: ${self:custom.resourcePrefix}LabelPrintingApi
+    description: Print Shipping Labels
+    disableLogs: false
+    tags:
+      Name: ${self:custom.resourcePrefix}LabelPrintingApi
+    package:
+      patterns:
+        - "!*.py"
+        - LabelPrintingApi.py
+      individually: true
+resources:
+  Resources:
+    UserPoolResourceServer:
+      Type: AWS::Cognito::UserPoolResourceServer
+      Properties:
+        UserPoolId: ap-southeast-1${self:custom.cognitoUserPoolId}
+        Identifier: "label"
+        Name: "LabelPrinting"
+        Scopes:
+          - ScopeName: "print"
+            ScopeDescription: "Scope to print label"
+
+

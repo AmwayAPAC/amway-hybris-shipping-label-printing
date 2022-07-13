@@ -1,0 +1,34 @@
+[
+  {
+    "Key": "Contact",
+    "Value": "Desmond.Soon@Amway.com"
+  },
+  {
+    "Key": "Environment",
+    "Value": "Preprod"
+  },
+  {
+    "Key": "Department",
+    "Value": "ApacSEA"
+  },
+  {
+    "Key": "ApplicationID",
+    "Value": "AWS"
+  },
+  {
+    "Key": "ApplicationName",
+    "Value": "AWS"
+  },
+  {
+    "Key": "Project",
+    "Value": "POE-2"
+  },
+  {
+    "Key": "Country",
+    "Value": "Msb"
+  },
+  {
+    "Key": "Purpose",
+    "Value": "To get shipping label from carrier and send this to Hybris"
+  }
+]
