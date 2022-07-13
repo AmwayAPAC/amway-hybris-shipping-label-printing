@@ -14,7 +14,7 @@ provider:
   name: aws
   runtime: python3.8
   stage: ${opt:stage, 'v1'}
-  region: ap-southeast-1
+  region: ${self:custom.region}
   stackName: ${self:custom.resourcePrefix}LabelPrintingAPIStack
   apiName: ${self:custom.resourcePrefix}LabelPrintingAPI
   memorySize: 128
@@ -34,7 +34,7 @@ provider:
     shouldStartNameWithService: false
   http:
     authorizer:
-      arn: arn:aws:cognito-idp:AWS::Region:AWS::AccountId:userpool/ap-southeast-1_IvuRje8nS
+      arn: arn:aws:cognito-idp:${self:custom.region}:${self:custom.awsAccountId}:userpool/${self:custom.region}${self:custom.cognitoUserPoolId}
       scopes: label/print
     cors:
       origins:
@@ -110,6 +110,7 @@ custom:
   countrySmall: msb
   resourcePrefix: Apac${self:custom.country}${self:custom.environments.${self:provider.stage}}
   awsAccountId: 141515744291
+  region: ap-southeast-1
   apiGatewayId: grbuqmbj72
   cognitoUserPoolId: _IvuRje8nS
   environments:
