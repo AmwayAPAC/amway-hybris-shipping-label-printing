@@ -1,7 +1,7 @@
 # Author: SEA IT - Desmond Soon
-# Service name: CMP to Zendesk Migration APIs.
+# Service name: Label Printing APIs.
 
-service: ${self:custom.resourcePrefix}CmpZendeskMigrationAPI
+service: ${self:custom.resourcePrefix}LabelPrintingAPI
 plugins:
   - "@pretty-fun-therapy/serverless-plugin-tag-cloud-watch-logs"
   #- serverless-aws-documentation

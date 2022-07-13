@@ -32,7 +32,7 @@ Parameters:
   GitHubRepo:
     Description: Specify the GitHub Repository value
     Type: String
-    Default: https://github.com/AmwayAPAC/cmp-zendesk-migration.git
+    Default: https://github.com/AmwayAPAC/amway-hybris-shipping-label-printing.git
   GitHubBranch:
     Description: Specify the GitHub branch value
     Type: String
